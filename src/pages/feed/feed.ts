@@ -27,6 +27,8 @@ export class FeedPage {
     time_comment:"12h ago"
   }
 
+  public lista_filmes = new Array<any>();
+
   public nome_usuario:string = "Marcelo Tadim, veio do código";
 
   constructor(
@@ -44,8 +46,9 @@ export class FeedPage {
     this.MoovieProvider.getLatestMoovies().subscribe(
       data=>{
         const response =(data as any);
-        const objet_retorno = JSON.parse(response._body);
-        console.log(objet_retorno);
+        const objeto_retorno = JSON.parse(response._body);
+        console.log(objeto_retorno);
+        this.lista_filmes = objeto_retorno.results;
       }, error =>{
         console.log(error);
       }
