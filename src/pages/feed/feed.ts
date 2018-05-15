@@ -29,11 +29,12 @@ export class FeedPage {
   }
 
   public lista_filmes = new Array<any>();
-
+  public page = 1;
   public nome_usuario: string = "Marcelo Tadim, veio do código";
   public loader;
   public refresher;
   public isRefreshing: boolean = false;
+  public infiniteScroll;
 
   constructor(
     public navCtrl: NavController,
@@ -73,15 +74,33 @@ export class FeedPage {
     this.navCtrl.push(FilmeDetalhesPage, { id: filme.id });
   }
 
-  carregarFilmes() {
+  doInfinite(infiniteScroll) {
+    this.page++;
+    this.infiniteScroll = infiniteScroll;
+    this.carregarFilmes(true);
+
+    infiniteScroll.complete();
+  }
+  //valor newpage para ele concatenar uma nova página
+  carregarFilmes(newpage: boolean = false) {
     this.abreCarregando();
-    this.MoovieProvider.getLatestMoovies().subscribe(
+    this.MoovieProvider.getLatestMoovies(this.page).subscribe(
       data => {
         const response = (data as any);
         const objeto_retorno = JSON.parse(response._body);
-        this.lista_filmes = objeto_retorno.results;
 
-        console.log(objeto_retorno);
+        if (newpage) {
+          //Se for uma nova página só joga (adiciona) no final
+          // Ou seja recebe ela mesma com objeto concatenado.
+
+          this.lista_filmes = this.lista_filmes.concat(objeto_retorno.results);
+          this.infiniteScroll.complete();
+
+        } else {
+          //se não for uma nova pagina adicone direto na lista de filmes
+
+          this.lista_filmes = objeto_retorno.results;
+        }
 
         this.fechaCarregando();
         if (this.isRefreshing) {
