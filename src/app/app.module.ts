@@ -15,6 +15,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { IntroPageModule } from '../pages/intro/intro.module';
 import { MoovieProvider } from '../providers/moovie/moovie';
 import { ConfigProvider } from '../providers/config/config';
+import { ConfiguracoesPageModule } from '../pages/configuracoes/configuracoes.module';
+import { SobrePageModule } from '../pages/sobre/sobre.module';
+import { PerfilPageModule } from '../pages/perfil/perfil.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { ConfigProvider } from '../providers/config/config';
     IonicModule.forRoot(MyApp),
     FeedPageModule,
     IntroPageModule,
-    HttpModule
+    HttpModule,
+    ConfiguracoesPageModule,
+    SobrePageModule,
+    PerfilPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
