@@ -14,16 +14,20 @@
 
 
 <ion-content padding>
-  <ion-card *ngFor ="let filme of lista_filmes">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-card *ngFor="let filme of lista_filmes">
 
     <ion-item>
       <ion-avatar item-start>
         <img src="https://secure.gravatar.com/avatar/e79ba2a49c69177486cd5eece0dd68f8?s=96&d=https%3A%2F%2Fpro-icons-avatars.s3.amazonaws.com%2Fimg%2Fm.png">
       </ion-avatar>
 
-    <h2 class="feed_title">{{ filme.original_title }}</h2>
-    <p class="feed_date">{{ filme.release_date }}</p>
-      
+      <h2 class="feed_title">{{ filme.original_title }}</h2>
+      <p class="feed_date">{{ filme.release_date }}</p>
+
     </ion-item>
 
     <img [src]="'https://image.tmdb.org/t/p/w500/' + filme.backdrop_path">

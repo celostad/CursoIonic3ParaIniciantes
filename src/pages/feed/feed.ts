@@ -31,6 +31,8 @@ export class FeedPage {
 
   public nome_usuario: string = "Marcelo Tadim, veio do código";
   public loader;
+  public refresher;
+  public isRefreshing: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -47,8 +49,14 @@ export class FeedPage {
     this.loader.present();
   }
 
-  fechaCarregando(){
+  fechaCarregando() {
     this.loader.dismiss();
+  }
+
+  doRefresh(refresher) {
+    this.refresher = refresher;
+    this.isRefreshing = true;
+    this.carregarFilmes();
   }
 
   public somaDoisNumeros(num1: number, num2: number): void {
@@ -56,7 +64,10 @@ export class FeedPage {
   }
 
   ionViewDidEnter() {
-    //this.somaDoisNumeros(10, 99);
+    this.carregarFilmes();
+  }
+
+  carregarFilmes() {
     this.abreCarregando();
     this.MoovieProvider.getLatestMoovies().subscribe(
       data => {
@@ -65,13 +76,21 @@ export class FeedPage {
         this.lista_filmes = objeto_retorno.results;
 
         console.log(objeto_retorno);
+
         this.fechaCarregando();
-        
+        if (this.isRefreshing) {
+          this.refresher.complete();
+          this.isRefreshing = false;
+        }
+
       }, error => {
         console.log(error);
         this.fechaCarregando();
+        if (this.isRefreshing) {
+          this.refresher.complete();
+          this.isRefreshing = false;
+        }
       }
     )
   }
-
 }
