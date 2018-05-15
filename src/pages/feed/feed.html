@@ -30,12 +30,12 @@
 
     </ion-item>
 
-    <img [src]="'https://image.tmdb.org/t/p/w500/' + filme.backdrop_path">
+    <img [src]="'https://image.tmdb.org/t/p/w500/' + filme.backdrop_path" (click)="abrirDetalhes(filme)">
 
     <ion-card-content>
       <p>{{ filme.overview }}</p>
     </ion-card-content>
-
+    <button ion-button block (click)="abrirDetalhes(filme)">Detalhes</button>
     <ion-row>
       <ion-col>
         <button ion-button icon-left clear small>

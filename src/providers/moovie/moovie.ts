@@ -20,6 +20,10 @@ export class MoovieProvider {
     return this.http.get(this.baseApiPath + "/movie/popular?api_key=" + this.getApiKey());
   }
 
+  getMooviesDetails(filme_id){
+    return this.http.get(this.baseApiPath + `/movie/${filme_id}?api_key=` + this.getApiKey());
+  }
+
   getApiKey():string {
     return "aa1a0d5462e56d8e4e19c559d33ea972&language=pt-BR";
     //&language=pt-BR
